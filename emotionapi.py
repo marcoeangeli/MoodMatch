@@ -1,9 +1,9 @@
 import requests
 import json
-import matplotlib.pyplot as plt
-from PIL import Image
-from matplotlib import patches
-from io import BytesIO
+#import matplotlib.pyplot as plt
+#from PIL import Image
+#from matplotlib import patches
+#from io import BytesIO
 subscription_key = "0001d91249d94b83b6eae6973496d0e4"
 assert subscription_key
 face_api_url = 'https://canadacentral.api.cognitive.microsoft.com/face/v1.0/detect'
@@ -17,4 +17,6 @@ params = {
 }
 data = {'url': image_url}
 response = requests.post(face_api_url, params=params, headers=headers, json=data)
-faces = 'response.json()'
+faces = response.json()[0]['faceAttributes']['emotion']
+
+print(max(faces, key=faces.get))
