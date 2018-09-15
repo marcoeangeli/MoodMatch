@@ -1,6 +1,4 @@
-import praw
-import requests
-import random
+import praw, random
 
 reddit = praw.Reddit(client_id="M87nRI3kCjaYRw", client_secret="2-sFdzE_TE58cQTMZwLpxZNiC60", user_agent='Hack the North 2018')
 
