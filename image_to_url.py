@@ -9,11 +9,12 @@ assert subscription_key
 face_api_url = 'https://canadacentral.api.cognitive.microsoft.com/face/v1.0/detect'
 reddit = praw.Reddit(client_id="M87nRI3kCjaYRw", client_secret="2-sFdzE_TE58cQTMZwLpxZNiC60", user_agent='Hack the North 2018')
 
-def image_to_emotion(image_url):
-    headers = {'Ocp-Apim-Subscription-Key': subscription_key}
+def image_to_emotion(image_path):
+    headers = {'Ocp-Apim-Subscription-Key': subscription_key,'Content-Type': 'application/octet-stream'}
     params = {'returnFaceAttributes':'emotion'}
-    data = {'url': image_url}
-    response = requests.post(face_api_url, params=params, headers=headers, json=data)
+
+    image_data = open(image_path, "rb").read() # Read the image into a byte array
+    response = requests.post(face_api_url, params=params, headers=headers, data=image_data)
     faces = response.json()[0]['faceAttributes']['emotion'] # Contains all the emotions with percentages on which is most likely
     del faces['contempt']
     return max(faces, key=faces.get) #Returns the key with the highest value
@@ -47,6 +48,6 @@ def emotion_to_url(emotion):
     return submissions[random.randint(0, 9)]
 
 if __name__ == "__main__":
-    image_url = 'http://www.publicchristian.com/wp-content/uploads/2014/11/Contempt_AS_crop-1123x640.jpg'
-    emotion = image_to_emotion(image_url)
+    image_path = "C:/Users/marco/Pictures/Camera Roll/test.jpg"
+    emotion = image_to_emotion(image_path)
     print(emotion)
