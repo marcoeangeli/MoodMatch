@@ -1,0 +1,140 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<!DOCTYPE html>
+<style>
+body{
+  background-color: #fff;
+}
+#container {
+  margin: 0px auto;
+  border: 10px #333 solid;
+}
+#videoElement {
+  background-color: #666;
+  width: 100%;
+  height: auto;
+  margin-top: 3vh;
+}
+img{
+  margin-top: 3vh;
+  width: 100%;
+}
+canvas{
+  display: none;
+}
+.left-column, .right-column{
+  border: 5vh;
+  height: 80vh;
+  border-radius: 5px;
+}
+
+#info{
+  color: gray;
+  vertical-align: bottom;
+}
+.container{
+}
+h1{
+  padding: 25px 0 0px 0;
+  color: #FF5F5F;
+  font-size: 60px;
+  font-family: 'Bungee', cursive;
+}
+h2, h3, #snap{
+  font-family: "Quicksand", sans-serif;
+  color: black;
+}
+.nav > div{
+}
+#snap{
+  width: 100%;
+  padding: 10px;
+  font-weight: bold;
+  background-color: #ff5f5f;
+  border-color: #ff5f5f;
+}
+h2{
+  padding-top: 25px;
+  text-transform: capitalize;
+}
+h3{
+  padding-top: 10px;
+  text-transform: capitalize;
+}
+.nav{
+}
+</style>
+
+<div class="container">
+  <div class="row">
+    <div class="nav col-md-12">
+      <h1 class="text-center offset-md-4">MoodMatch</h1>
+      <p id="info" class="offset-md-4"><i>Take a picture and we'll match your mood with content!</i></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-1">
+      <span> </span>
+    </div>
+    <div class="row col-md-11">
+      <div class="left-column col-md-4">
+        <video autoplay="true" id="videoElement"></video>
+        <button id="snap" class="btn btn-primary">TAKE PICTURE</button>
+        <canvas id="canvas" width="640" height="480"></canvas>
+        <div class="text-center">
+          <h2><b>{{emotion}}</b></h2>
+          <h3>{{emotion_phrase}}</h3>
+        </div>
+      </div>
+
+      <div class="right -column col-md-6 offset-md-1">
+        <img class="img-thumbnail" src="{{reddit_url}}">
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+var video = document.querySelector("#videoElement");
+
+if (navigator.mediaDevices.getUserMedia) {
+  navigator.mediaDevices.getUserMedia({video: true})
+  .then(function(stream) {
+    video.srcObject = stream;
+  })
+  .catch(function(err0r) {
+    console.log("Something went wrong!");
+  });
+}
+
+// Elements for taking the snapshot
+var canvas = document.getElementById('canvas');
+var context = canvas.getContext('2d');
+
+// Trigger photo take
+document.getElementById("snap").addEventListener("click", function() {
+  context.drawImage(video, 0, 0, 640, 480);
+
+  var image = canvas.toDataURL("image/jpeg");
+
+  $.ajax({
+    type:"POST",
+    url:"/",
+    data: {
+      image: image,
+      csrfmiddlewaretoken: '{{ csrf_token }}'
+    },
+    success: function(){
+      window.location.href = response.redirect;
+    }
+  });
+
+
+  window.location.href = '/';
+
+  return false;
+});
+
+
+</script>
+{% endblock %}
