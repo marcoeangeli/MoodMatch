@@ -74,26 +74,24 @@ def image_to_emotion(image_path):
     return max(faces, key=faces.get) #Returns the key with the highest value
 
 def emotion_to_phrases(emotion):
-    phrases =  {'anger': ['Why so angry?'],
-                'contempt': ['Thats a high horse you are on right now.'],
-                'disgust': ['Why so disgusted? Did you look into a mirror?'],
-                'fear': ['Wow you are such'],
-                'happiness': ['aaa'],
-                'neutral': ['aaa'],
-                'sadness': ['aaa'],
-                'surprise': ['aasdasdaa'], }
+    phrases =  {'anger': ['Take a chill pill.', 'Simmer down.', 'Breathe in, breathe out.'],
+                'disgust': ['Did you look into a mirror?'],
+                'fear': ['Are you going to cry?'],
+                'happiness': ['You have a beautiful smile'],
+                'neutral': ['Wny so serious?'],
+                'sadness': ['Why so glum, chum?'],
+                'surprise': ['Boo!'], }
 
     return phrases[emotion][random.randint(0, len(phrases[emotion]) - 1)]
 
 def emotion_to_url(emotion):
     emotions = {'anger': 'fml',
-                'contempt': 'wholesomememes',
                 'disgust': 'facepalm',
-                'fear': 'holdmybeer',
+                'fear': 'creepy',
                 'happiness': 'wholesomememes',
                 'neutral': 'me_irl',
-                'sadness': 'wholesomememes',
-                'surprise': 'wholesomememes', }
+                'sadness': 'funnyandsad',
+                'surprise': 'earthporn', }
 
     submissions = []
 
