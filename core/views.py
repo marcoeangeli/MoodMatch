@@ -78,7 +78,7 @@ def emotion_to_phrases(emotion):
                 'disgust': ['Did you look into a mirror?'],
                 'fear': ['Are you going to cry?'],
                 'happiness': ['You have a beautiful smile'],
-                'neutral': ['Wny so serious?'],
+                'neutral': ['Why so serious?'],
                 'sadness': ['Why so glum, chum?'],
                 'surprise': ['Boo!'], }
 
@@ -99,8 +99,9 @@ def emotion_to_url(emotion):
         submissions.append(post.url)
 
     for index, submission in enumerate(submissions):
-        if submission[:-4] not in ['jpg', 'jpeg', 'png', 'PNG']:
+        if submission[:-4] not in ['.jpg', 'jpeg', '.png', '.PNG']:
             submissions.remove(submission)
+            print(submission)
 
     print(submissions)
     chosen_submission = random.choice(submissions)
