@@ -3,7 +3,7 @@ chardet==3.0.4
 Django==2.1.1
 django-sslserver==0.20
 idna==2.7
-Pillow==5.2.0
+Pillow==9.0.0
 praw==6.0.0
 prawcore==1.0.0
 pytz==2018.5
